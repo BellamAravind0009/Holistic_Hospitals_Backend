@@ -1,0 +1,79 @@
+Hospital Appointment Booking Assistant Knowledge Base 
+ 
+System Overview: 
+This assistant is designed to help patients and hospital staff interact 
+seamlessly with the hospital appointment booking system, which has been 
+developed using Django and PostgreSQL for the backend and React, 
+Bootstrap, and Lucide for the frontend. The system facilitates features 
+such as booking appointments, viewing doctor schedules, processing 
+payments, and tracking token numbers for patient visits. 
+ 
+Frequently Asked Questions (FAQs): 
+ 
+1. How do I book an appointment? 
+To book an appointment, log in to the system first. Once logged in, 
+navigate to the "Book Appointment" section. From there, you can select a 
+doctor, choose your preferred date and time, and select a payment method 
+- either Pay Now or Pay Later. 
+ 
+2. What happens after booking? 
+After successfully booking an appointment, the system assigns you a 
+unique token number. This number is based on the current day's queue and 
+will be displayed immediately upon confirming or skipping the payment 
+process. 
+ 
+3. What are the payment options? 
+You can choose between two payment options: Pay Now or Pay Later. If you 
+select Pay Now, you will be redirected to a Razorpay UPI payment 
+interface. If you select Pay Later, your appointment will be booked 
+without processing a payment at that moment. 
+ 
+4. What is the consultation fee? 
+The standard consultation fee is ₹500. This fee is displayed clearly 
+during the appointment booking process. 
+ 
+5. How do I check my token number? 
+Your token number will be shown after a successful appointment booking. 
+It is also accessible in the "My Appointments" section for your 
+reference. 
+ 
+6. Can I view or cancel my appointments? 
+Yes. After logging in, go to the "View Appointments" page to see a 
+list of your scheduled appointments. Options for canceling or 
+rescheduling can be implemented as needed. 
+ 
+7. How do I know which doctors are available? 
+When booking an appointment, the system automatically shows you the list 
+of doctors and their available slots based on current scheduling data. 
+ 
+8. What time should I arrive for my appointment? 
+To ensure a smooth experience, it is recommended to arrive at least 
+15-20 minutes before your token number is expected to be called. 
+ 
+Technical Workflows: 
+ 
+Authentication: 
+The system uses JWT-based authentication. When a user logs in through the 
+API endpoint (/api/token/), a JWT token is issued and stored in the 
+browser's localStorage. This token is then attached to all subsequent 
+API requests to access secured endpoints. 
+ 
+Booking Flow: 
+When a patient books an appointment, they select the doctor and the 
+desired time slot. A POST request is sent to the backend endpoint 
+(/api/book-appointment/) with the booking details. The backend calculates 
+a unique token number based on the current date and number of existing 
+appointments. If Pay Now is selected, Razorpay is invoked to handle the 
+transaction. 
+ 
+Payment Integration: 
+Razorpay handles UPI-based payments on the frontend. Once the payment is 
+initiated from the frontend (payment.js), the backend endpoint 
+(/api/verify-payment/) handles the verification after redirection to 
+confirm the transaction. 
+ 
+Viewing Appointments: 
+Users can fetch their appointments through the endpoint (/api/my-
+appointments/), which returns a list of all bookings associated with the 
+logged-in user. Appointments can be filtered based on date, status, or 
+token number.
